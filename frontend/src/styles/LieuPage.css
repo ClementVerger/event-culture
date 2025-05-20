@@ -1,0 +1,25 @@
+.lieu-page {
+  text-align: center;
+  padding: 20px;
+}
+
+.lieu-page h1 {
+  margin-bottom: 20px;
+}
+
+.lieu-list {
+  list-style-type: none;
+  padding: 0;
+}
+
+.lieu-list li {
+  margin-bottom: 20px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+}
+
+.lieu-list h3 {
+  margin: 0 0 10px 0;
+}

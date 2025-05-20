@@ -1,0 +1,36 @@
+.home-page {
+  text-align: center;
+  padding: 20px;
+}
+
+.event-details {
+  margin: 20px 0;
+  text-align: left;
+}
+
+.event-details h2 {
+  margin-top: 20px;
+}
+
+.auth-buttons {
+  margin: 20px 0;
+}
+
+.auth-buttons button {
+  margin: 0 10px;
+  padding: 10px 20px;
+  font-size: 16px;
+}
+
+.links {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.links a {
+  margin: 10px 0;
+  text-decoration: none;
+  color: #007bff;
+  font-size: 18px;
+}

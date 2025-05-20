@@ -1,0 +1,46 @@
+.login-page {
+  text-align: center;
+  padding: 20px;
+}
+
+.login-page h1 {
+  margin-bottom: 20px;
+}
+
+.social-login {
+  margin-top: 20px;
+}
+
+.social-login button {
+  margin: 10px;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.google-login {
+  background-color: #db4437;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+}
+
+.facebook-login {
+  background-color: #3b5998;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+}
+
+.forgot-password {
+  margin-top: 20px;
+}
+
+.forgot-password a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.forgot-password a:hover {
+  text-decoration: underline;
+}

@@ -1,0 +1,75 @@
+{
+  "lieu": {
+    "nom": "Château de Versailles",
+    "adresse": "Place d'Armes, 78000 Versailles, France",
+    "latitude": 48.8049,
+    "longitude": 2.1204,
+    "description": "Un des plus célèbres châteaux du monde, ancienne résidence des rois de France."
+  },
+  "event": {
+    "titre": "Festival des Jardins",
+    "description": "Un événement annuel dédié à la beauté des jardins du Château de Versailles.",
+    "date_debut": "2025-06-01T10:00:00Z",
+    "date_fin": "2025-06-03T18:00:00Z",
+    "id_lieu": 1,  // correspond au lieu créé
+    "id_createur": 1 // un user fictif
+  },
+  "program": {
+    "id_event": 1,
+    "titre": "Programme Découverte des Jardins",
+    "description": "Un parcours complet à travers les plus beaux jardins du domaine.",
+    "duree_jours": 3
+  },
+  "sites": [
+    {
+      "titre": "Le Jardin à la Française",
+      "image_url": "https://example.com/jardin-francaise.jpg",
+      "histoire": "Un exemple classique de jardin symétrique du XVIIe siècle.",
+      "type": "culturel",
+      "latitude": 48.8050,
+      "longitude": 2.1220,
+      "id_lieu": 1
+    },
+    {
+      "titre": "Le Bosquet des Rocailles",
+      "image_url": "https://example.com/bosquet-rocailles.jpg",
+      "histoire": "Un bosquet orné de coquillages et de rocailles imaginé par Le Nôtre.",
+      "type": "naturel",
+      "latitude": 48.8055,
+      "longitude": 2.1230,
+      "id_lieu": 1
+    },
+    {
+      "titre": "Le Bassin de Neptune",
+      "image_url": "https://example.com/bassin-neptune.jpg",
+      "histoire": "Le plus grand bassin de Versailles, célèbre pour ses fontaines monumentales.",
+      "type": "historique",
+      "latitude": 48.8060,
+      "longitude": 2.1240,
+      "id_lieu": 1
+    }
+  ],
+  "parcour": {
+    "nom": "Parcours des Jardins Royaux",
+    "id_program": 1,
+    "duree_parcour": 1,
+    "description": "Une journée immersive dans les plus beaux espaces verts de Versailles."
+  },
+  "parcour_sites": [
+    {
+      "id_parcour": 1,
+      "id_site": 1,
+      "ordre": 1
+    },
+    {
+      "id_parcour": 1,
+      "id_site": 2,
+      "ordre": 2
+    },
+    {
+      "id_parcour": 1,
+      "id_site": 3,
+      "ordre": 3
+    }
+  ]
+}

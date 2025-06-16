@@ -1,13 +1,13 @@
 const express = require('express');
 const router = express.Router();
 const auth = require('../middleware/auth');
-const { Event, Lieu, User, Participant } = require('../config/database');
+const { Event, Lieu, User, Participant, Site, Program } = require('../config/database');
 const dayjs = require("dayjs");
 require("dayjs/locale/fr"); // Importer le français
 dayjs.locale("fr");
 
 // Obtenir tous les événements
-router.get('/api/events', auth, async (req, res) => {
+router.get('/api/events', async (req, res) => {
   try {
     const events = await Event.findAll({
       include: [
@@ -56,8 +56,8 @@ router.get('/api/events/:id', auth, async (req, res) => {
       return res.status(404).send('Evénement non trouvé');
     }
 
-     // Récupérer le nombre de participants
-     const nombreParticipants = await Participant.count({
+    // Récupérer le nombre de participants
+    const nombreParticipants = await Participant.count({
       where: {
         id_event: req.params.id
       }
@@ -74,11 +74,48 @@ router.get('/api/events/:id', auth, async (req, res) => {
   }
 });
 
+// Obtenir les sites d'un événement
+router.get('/api/events/:id/sites', auth, async (req, res) => {
+  try {
+    const event = await Event.findByPk(req.params.id);
+    if (!event) {
+      return res.status(404).send('Evénement non trouvé');
+    }
+    const sites = await Site.findAll({
+      where: { id_lieu: event.id_lieu },
+    });
+    if (!sites) {
+      return res.status(404).send('Aucun site trouvé pour cet événement');
+    }
+    res.status(200).send(sites);
+  } catch (error) {
+    res.status(500).json({ error: 'Erreur lors de la récupération des sites de l\'événement' });
+  }
+});
+
+// Obtenir les programmes d'un événement
+router.get('/api/events/:id/programs', async (req, res) => {
+  try {
+    const event = await Event.findByPk(req.params.id);
+    if (!event) {
+      return res.status(404).send('Evénement non trouvé');
+    }
+    const programs = await Program.findAll({
+      where: { id_event: event.id }
+    });
+    res.status(200).send(programs);
+
+  } catch (error) {
+    res.status(500).json({ error: 'Erreur lors de la récupération des programmes de l\'événement' });
+  }
+});
+
+
 // Créer un événement
 router.post('/api/events', auth, async (req, res) => {
-  const { titre, description, date_debut, date_fin, id_lieu, id_createur } = req.body;
+  const { titre, description, date_debut, date_fin, id_lieu, image_url, id_createur } = req.body;
   try {
-    const event = await Event.create({ titre, description, date_debut, date_fin, id_lieu, id_createur });
+    const event = await Event.create({ titre, description, date_debut, date_fin, id_lieu, image_url, id_createur });
     res.status(201).send(event);
   } catch (error) {
     res.status(500).json({ error: 'Erreur lors de la création de l\'événement' });
@@ -93,7 +130,7 @@ router.post('/api/events/:id/participate', auth, async (req, res) => {
     if (!event) {
       return res.status(404).send('Evénement non trouvé');
     }
-    const participant = await Participant.create({ id_user, id_event: event.id , statut});
+    const participant = await Participant.create({ id_user, id_event: event.id, statut });
     res.status(201).send(participant);
   } catch (error) {
   }
@@ -122,7 +159,7 @@ router.delete('/api/events/:id/participate', auth, async (req, res) => {
 
 // Mettre à jour un événement
 router.put('/api/events/:id', auth, async (req, res) => {
-  const { titre, description, date_debut, date_fin, id_lieu } = req.body;
+  const { titre, description, image_url, date_debut, date_fin, id_lieu } = req.body;
   try {
     const event = await Event.findByPk(req.params.id);
     if (!event) {
@@ -130,6 +167,7 @@ router.put('/api/events/:id', auth, async (req, res) => {
     }
     event.titre = titre;
     event.description = description;
+    event.image_url = image_url;
     event.date_debut = date_debut;
     event.date_fin = date_fin;
     event.id_lieu = id_lieu;

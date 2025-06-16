@@ -30,5 +30,11 @@ module.exports = (sequelize, DataTypes) => {
         timestamps: false
     });
 
+    // Ajout de l'association pour Sequelize (important pour les belongsToMany)
+    ParcourSite.associate = (models) => {
+        ParcourSite.belongsTo(models.Parcour, { foreignKey: 'id_parcour', as: 'parcour' });
+        ParcourSite.belongsTo(models.Site, { foreignKey: 'id_site', as: 'site' });
+    };
+
     return ParcourSite;
 }

@@ -4,7 +4,7 @@ const auth = require('../middleware/auth');
 const { Lieu } = require('../config/database');
 
 // Obtenir tous les lieux
-router.get('/api/lieux', auth, async (req, res) => {
+router.get('/api/lieux', async (req, res) => {
   try {
     const lieux = await Lieu.findAll();
     res.status(200).send(lieux);

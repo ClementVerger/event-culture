@@ -26,6 +26,10 @@ module.exports = (sequelize, DataTypes) => {
     },
     id_createur: {
       type: DataTypes.INTEGER,
+    },
+    image_url: {
+      type: DataTypes.STRING,
+      allowNull: true
     }
   }, {
     tableName: 'EVENT',
@@ -35,6 +39,7 @@ module.exports = (sequelize, DataTypes) => {
   Event.associate = (models) => {
     Event.belongsTo(models.Lieu, { foreignKey: 'id_lieu', as: 'lieu' });
     Event.belongsTo(models.User, { foreignKey: 'id_createur', as: 'createur' });
+    Event.hasMany(models.Gallery, { foreignKey: 'id_event', as: 'galleries', onDelete: 'CASCADE' });
   };
   
   return Event;

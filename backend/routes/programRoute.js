@@ -4,7 +4,7 @@ const auth = require('../middleware/auth');
 const { Program, Event, Lieu } = require('../config/database');
 
 // Obtenir tous les programmes
-router.get('/api/programs', auth, async (req, res) => {
+router.get('/api/programs', async (req, res) => {
   try {
     const programs = await Program.findAll();
     res.status(200).send(programs);
@@ -14,6 +14,7 @@ router.get('/api/programs', auth, async (req, res) => {
     res.status(500).json({ error: 'Erreur lors de la récupération des programmes' });
   }
 });
+
 
 // Obtenir un programme par ID
 router.get('/api/programs/:id', auth, async (req, res) => {
@@ -48,19 +49,22 @@ router.get('/api/programs/:id', auth, async (req, res) => {
   }
 });
 
+
+
 // Créer un programme
 router.post('/api/programs', auth, async (req, res) => {
-  const { id_event, titre, description, duree_jours } = req.body;
+  const { id_event, titre, description, duree_jours, image_url } = req.body;
   try {
-    const program = await Program.create({ id_event, titre, description, duree_jours });
+    const program = await Program.create({ id_event, titre, description, duree_jours, image_url });
     res.status(201).send(program);
   } catch (error) {
-    res.status(500).send(error.toString());  }
+    res.status(500).send(error.toString());
+  }
 });
 
 // Mettre à jour un programme
 router.put('/api/programs/:id', auth, async (req, res) => {
-  const { id_event, titre, description, date_heure } = req.body;
+  const { id_event, titre, description, duree_jours, image_url } = req.body;
   try {
     const program = await Program.findByPk(req.params.id);
     if (!program) {
@@ -69,7 +73,8 @@ router.put('/api/programs/:id', auth, async (req, res) => {
     program.id_event = id_event;
     program.titre = titre;
     program.description = description;
-    program.date_heure = date_heure;
+    program.duree_jours = duree_jours;
+    program.image_url = image_url;
     await program.save();
     res.status(200).send(program);
   } catch (error) {
@@ -87,7 +92,7 @@ router.delete('/api/programs/:id', auth, async (req, res) => {
     await program.destroy();
     res.status(204).send();
   } catch (error) {
-    res.status(500).json({ error: 'Erreur lors de la suppression du programme' });
+    res.status(500).json({ error: 'Erreur lors de la suppression du programme' + error });
   }
 });
 

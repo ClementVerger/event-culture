@@ -16,7 +16,8 @@ module.exports = (sequelize, DataTypes) => {
       references: {
         model: 'PROGRAM',
         key: 'id'
-      }
+      },
+      onDelete: 'CASCADE',
     },
     duree_parcour: {
       type: DataTypes.INTEGER,
@@ -32,7 +33,7 @@ module.exports = (sequelize, DataTypes) => {
   });
 
   Parcour.associate = (models) => {
-    Parcour.belongsTo(models.Program, { foreignKey: 'id_program', as: 'program' });
+    Parcour.belongsTo(models.Program, { foreignKey: 'id_program', as: 'program', onDelete: 'CASCADE' });
 
     Parcour.belongsToMany(models.Site, {
       through: models.ParcourSite,
@@ -40,6 +41,8 @@ module.exports = (sequelize, DataTypes) => {
       otherKey: 'id_site',
       as: 'sites'
     });
+
+    Parcour.hasMany(models.Gallery, { foreignKey: 'id_parcour', as: 'galleries', onDelete: 'CASCADE' });
   };
 
   return Parcour;

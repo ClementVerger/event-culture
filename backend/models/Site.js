@@ -18,8 +18,7 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false
       },
       type: {
-        type: DataTypes.ENUM,
-        values: ['historique', 'culturel', 'naturel'],
+        type: DataTypes.STRING,
         allowNull: false
       },
       latitude: {

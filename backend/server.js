@@ -4,17 +4,15 @@ const cors = require('cors');
 const authRoutes = require('./routes/authRoute');
 const userRoutes = require('./routes/userRoute');
 const eventRoutes = require('./routes/eventRoute');
-const lieuRoutes = require('./routes/lieuRoutes'); 
+const lieuRoutes = require('./routes/lieuRoute'); 
 const programRoutes = require('./routes/programRoute'); 
 const siteRoutes = require('./routes/siteRoute');
 const parcourRoutes = require('./routes/parcourRoute');
 const parcourSiteRoutes = require('./routes/parcour-sitesRoute');
+const galleryRoutes = require('./routes/galleryRoute');
 
-const catalogRoutes = require('./routes/catalogRoute'); 
-const oeuvreRoutes = require('./routes/oeuvreRoute'); 
-const mediaRoutes = require('./routes/mediaRoute'); 
 const participantRoutes = require('./routes/participantRoute'); 
-const commentRoutes = require('./routes/commentRoute'); 
+
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -24,7 +22,7 @@ app.use(express.json());
 app.use(cors());
 
 // Synchronisation des modèles avec la base de données
-sequelize.sync({ /*force: false*/ }).then(() => {
+sequelize.sync({ /*force: false*/  }).then(() => {
     console.log('Database & tables created!');
 });
 
@@ -37,12 +35,10 @@ app.use(programRoutes);
 app.use(siteRoutes);
 app.use(parcourRoutes);
 app.use(parcourSiteRoutes);
+app.use(galleryRoutes); 
 
-app.use(catalogRoutes);
-app.use(oeuvreRoutes);
-app.use(mediaRoutes);
 app.use(participantRoutes); 
-app.use(commentRoutes);
+
 
 // Route de test pour vérifier la connexion à la base de données
 app.get('/', (req, res) => {

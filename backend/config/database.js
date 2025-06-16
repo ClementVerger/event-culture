@@ -17,18 +17,16 @@ db.Program = require('../models/Program')(sequelize, DataTypes);
 db.Site = require('../models/Site')(sequelize, DataTypes);
 db.Parcour = require('../models/Parcour')(sequelize, DataTypes);
 db.ParcourSite = require('../models/ParcourSite')(sequelize, DataTypes);
-db.Catalog = require('../models/Catalog')(sequelize, DataTypes);
-db.Oeuvre = require('../models/Oeuvre')(sequelize, DataTypes);
-db.Media = require('../models/Media')(sequelize, DataTypes);
 db.Participant = require('../models/Participant')(sequelize, DataTypes);
-db.Comment = require('../models/Comment')(sequelize, DataTypes);
+db.Gallery = require('../models/Gallery')(sequelize, DataTypes);
 
 
-// Définir les associations après le chargement des modèles
-db.Lieu.hasMany(db.Event, { foreignKey: 'id_lieu' });
-db.Event.belongsTo(db.Lieu, { foreignKey: 'id_lieu', as: 'lieu' });
-db.Event.belongsTo(db.User, { foreignKey: 'id_createur', as: 'createur' });
-db.Program.belongsTo(db.Event, { foreignKey: 'id_event', as: 'event' });
 
+// Appeler les méthodes associate si elles existent
+Object.values(db).forEach(model => {
+  if (model.associate) {
+    model.associate(db);
+  }
+});
 
 module.exports = db;

@@ -24,7 +24,11 @@ module.exports = (sequelize, DataTypes) => {
     duree_jours: {
       type: DataTypes.INTEGER,
       allowNull: false
-    }
+    },
+    image_url: {
+      type: DataTypes.STRING,
+      allowNull: true
+    },
   }, {
     tableName: 'PROGRAM',
     timestamps: true
@@ -32,8 +36,17 @@ module.exports = (sequelize, DataTypes) => {
 
   // Associations
   Program.associate = (models) => {
-    Program.belongsTo(models.Event, { foreignKey: 'id_event', as: 'event' });
+    Program.belongsTo(models.Event, { foreignKey: 'id_event', as: 'event', onDelete: 'CASCADE', hooks: true });
+
+    Program.hasMany(models.Parcour, {
+      foreignKey: 'id_program',
+      as: 'parcours',
+      onDelete: 'CASCADE',
+    });
+    Program.hasMany(models.Gallery, { foreignKey: 'id_program', as: 'galleries', onDelete: 'CASCADE' });
   };
-    // Retourne le modèle correctement
+
+
+  // Retourne le modèle correctement
   return Program;
 };

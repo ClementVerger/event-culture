@@ -7,10 +7,14 @@ const { ParcourSite } = require('../config/database');
 router.post('/api/parcour-sites', auth, async (req, res) => {
   const { id_parcour, id_site, ordre } = req.body;
   try {
+    if (!id_parcour || !id_site) {
+      return res.status(400).json({ error: 'id_parcour et id_site sont requis' });
+    }
     const parcourSite = await ParcourSite.create({ id_parcour, id_site, ordre });
     res.status(201).send(parcourSite);
   } catch (error) {
-    res.status(500).json({ error: 'Erreur lors de la création du lien parcours-site' });
+    console.error("Erreur lors de la création du lien parcours-site :", error); // Ajout du log détaillé
+    res.status(500).json({ error: 'Erreur lors de la création du lien parcours-site', details: error.message });
   }
 });
 

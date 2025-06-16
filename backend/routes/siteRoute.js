@@ -4,7 +4,7 @@ const auth = require('../middleware/auth');
 const { Site, Lieu } = require('../config/database');
 
 // Obtenir tous les sites
-router.get('/api/sites', auth, async (req, res) => {
+router.get('/api/sites', async (req, res) => {
   try {
     const sites = await Site.findAll();
     res.status(200).send(sites);
@@ -72,4 +72,17 @@ router.delete('/api/sites/:id', auth, async (req, res) => {
     res.status(500).send(error.toString());
   }
 });
+
+// Obtenir tous les sites d'un lieu donné
+router.get('/api/lieux/:id/sites', async (req, res) => {
+  try {
+    const sites = await Site.findAll({
+      where: { id_lieu: req.params.id }
+    });
+    res.status(200).send(sites);
+  } catch (error) {
+    res.status(500).json({ error: 'Erreur lors de la récupération des sites du lieu' });
+  }
+});
+
 module.exports = router;
